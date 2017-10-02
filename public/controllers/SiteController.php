@@ -62,7 +62,7 @@ class SiteController extends Controller
     public function actionIndex()
     {
 
-	   $conn = mysqli_connect("db", "root", "123456", "mysql");
+        $conn = mysqli_connect("mysql_db", "root", "123456", "mysql");
 
         if (mysqli_connect_errno()){
             echo "Failed to connect to MySQL: " . mysqli_connect_error();
@@ -71,11 +71,17 @@ class SiteController extends Controller
         $query =  mysqli_query($conn,"SELECT * FROM user");
 
         while($result = mysqli_fetch_array($query)){
-          echo $result["User"]."<br />";
+            echo $result["User"]."<br />";
         }
 
         mysqli_close($conn);
-       return $this->render('index');
+
+
+        $q = 'SELECT * from site'; //This is sql statement
+        $result1 = Yii::$app->db->createCommand($q)->queryAll();
+        var_dump($result1);
+
+        return $this->render('index');
     }
 
     /**
